@@ -10,7 +10,7 @@ These dotfiles are intended to go with numerous programs I use:
 - [awesomewm]() (window manager)
 - [dmenu](https://github.com/ricksdomein/dmenu) (dynamic menu)
 - [st](https://github.com/ricksdomein/st) (terminal emulator)
--
+
 
 ## How To Manage Your Dotfiles
 
