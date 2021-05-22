@@ -14,4 +14,4 @@ These dotfiles are intended to go with numerous programs I use:
 
 ## How To Manage Your Dotfiles
 
-I use the **git bare repository method** for managing my dotfiles. Here is an article about this method of managing dotfiles: [https://developer.atlassian.com/blog/2016/02/best-way-to-store-dotfiles-git-bare-repo/][https://developer.atlassian.com/blog/2016/02/best-way-to-store-dotfiles-git-bare-repo/]
+I use the **git bare repository method** for managing my dotfiles. Here is an article about this method of managing dotfiles: [https://developer.atlassian.com/blog/2016/02/best-way-to-store-dotfiles-git-bare-repo/]
