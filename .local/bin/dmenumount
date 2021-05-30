@@ -1,22 +1,20 @@
 #!/bin/bash
 
-ignore=("/dev/sda1","/dev/sda2","/dev/sdb1","/dev/sdc1")
+ignore=("/dev/sda1" "/dev/sda2" "/dev/sdb1" "/dev/sdc1")
 
 
 mountusb() {
-    device="$(printf "$mount_devices" | awk '{$NF=""; print $0}' | dmenu -p "Mount:")"
+    device="$(printf "%s" "$mount_devices" | awk '{$NF=""; print $0}' | dmenu -p "Mount:")"
     [[ -z $device ]] && exit
-    device="$(printf "$mount_devices" | grep "$device")"
-    udisksctl mount -b "$(echo "$device"| awk 'NF>1{print $NF}')"
-	[[ "$?" == "0" ]] && notify-send -a "dmenumount" "USB mounting" "$device"
+    device="$(printf "%s" "$mount_devices" | grep "$device")"
+    if udisksctl mount -b "$(echo -e "$device" | awk 'NF>1{print $NF}')"; then notify-send -a "dmenumount" "USB mounting" "$device"; fi
 }
 
 unmountusb() {
-    device="$(printf "$unmount_devices" | awk '{$NF=""; print $0}' | dmenu -p "Unmount:")"
+    device="$(printf "%s" "$unmount_devices" | awk '{$NF=""; print $0}' | dmenu -p "Unmount:")"
     [[ -z $device ]] && exit
-    device="$(printf "$unmount_devices" | grep "$device")"
-    udisksctl unmount -b "$(echo "$device"| awk 'NF>1{print $NF}')"
-	[[ "$?" == "0" ]] && notify-send -a "dmenumount" "USB unmounting" "$device"
+    device="$(printf "%s" "$unmount_devices" | grep "$device")"
+    if udisksctl unmount -b "$(echo -e "$device" | awk 'NF>1{print $NF}')"; then notify-send -a "dmenumount" "USB unmounting" "$device"; fi
 }
 
 mount_devices=""
@@ -24,12 +22,12 @@ unmount_devices=""
 while IFS='' read -r u || [ -n "$u" ]; do
      m="$(echo "$u" | awk '{print $1;}')"
      s="($(echo "$u" | awk '{print $3;}'))"
-    if [ -n "$(udisksctl info -b $m | awk '{if(/IdType:\s*/) printf $2}')" ];then
-        name="$(udisksctl info -b $m | grep '\s*Drive:' | sed 's:.*/::' | sed 's/_/ /g' | grep -wo '[^[:digit:]]\+')"
+    if [ -n "$(udisksctl info -b "$m" | awk '{if(/IdType:\s*/) printf $2}')" ];then
+        name="$(udisksctl info -b "$m" | grep '\s*Drive:' | sed 's:.*/::' | sed 's/_/ /g' | grep -wo '[^[:digit:]]\+')"
         if [ -n "$(echo "$u" | awk '$4!=""{printf "%s (%s)\n",$1,$3}')" ];then
-            [[ " ${ignore[*]} " == *"$m"*  ]] || unmount_devices+="$(echo "$name $s $m")\n"
+            [[ " ${ignore[*]} " == *"$m"*  ]] || unmount_devices+="$name $s $m\n"
         else
-            [[ " ${ignore[*]} " == *"$m"*  ]] || mount_devices+="$(echo "$name $s $m")\n"
+            [[ " ${ignore[*]} " == *"$m"*  ]] || mount_devices+="$name $s $m\n"
         fi
     fi
 done <<< $(lsblk -rpo "name,type,size,mountpoint" | grep 'part\|rom\|disk')
