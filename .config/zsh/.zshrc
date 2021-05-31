@@ -15,6 +15,9 @@ HISTSIZE=10000000
 SAVEHIST=10000000
 HISTFILE=~/.cache/zsh/history
 
+setopt ksh_glob
+setopt no_bare_glob_qual
+
 autoload -Uz compinit
 compinit
 
