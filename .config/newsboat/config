@@ -38,13 +38,13 @@ macro c set browser "xsel -b <<<" ; open-in-browser ; set browser linkhandler
 #color listnormal cyan default
 color listfocus color3 default bold
 color listnormal_unread color2 default
-color listfocus_unread color10 default bold
+color listfocus_unread color3 default bold
 color info color4 default
 #color article white default bold
 
 
 highlight all "---.*---" yellow
-highlight feedlist ".*(0/0))" color8
+#highlight feedlist ".*(0/0))" color8
 highlight article "(^Feed:.*|^Title:.*|^Author:.*)" cyan default bold
 highlight article "(^Link:.*|^Date:.*)" default default
 highlight article "https?://[^ ]+" green default
