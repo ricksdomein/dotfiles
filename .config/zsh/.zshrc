@@ -5,7 +5,7 @@ autoload -U colors && colors	# Load colors
 #PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
 
 PROMPT=$'%F{%(#.blue.green)}┌──[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(#.blue.green)}]\n└─%B%(#.%F{red}#.%F{blue}$)%b%F{reset} '
-#PS1=$'> '
+#PROMPT="- "
 
 setopt autocd		# Automatically cd into typed directory.
 stty stop undef		# Disable ctrl-s to freeze terminal.
@@ -18,7 +18,7 @@ HISTFILE=~/.cache/zsh/history
 
 # History search
 bindkey -v
-bindkey '^R' history-incremental-search-backward
+#bindkey '^R' history-incremental-search-backward
 
 setopt ksh_glob
 setopt no_bare_glob_qual
@@ -80,6 +80,12 @@ bindkey -s '^o' 'lfcd\n'
 bindkey -s '^a' 'bc -lq\n'
 
 bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'
+
+rhist () {
+	print -z "$( cat $HISTFILE | tac | awk $'!x[$0]++' | dmenu -i -p "Search: ")"
+}
+
+bindkey -s '^R' 'rhist\n'
 
 bindkey '^[[P' delete-char
 
