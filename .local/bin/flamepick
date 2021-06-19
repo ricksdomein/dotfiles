@@ -6,6 +6,6 @@
 
 case "$(printf "Select area\\nFull screen\\nFull screen (clipboard)" | dmenu -i -p "Screenshot:")" in
 	"Select area") flameshot gui ;;
-	"Full screen") flameshot full -p "$(xdg-user-dir PICTURES)" ;;
+	"Full screen") sleep 0.5s && flameshot full -p "${XDG_PICTURES_DIR}" ;;
 	"Full screen (clipboard)") flameshot full -c ;;
 esac
