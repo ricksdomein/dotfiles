@@ -58,6 +58,7 @@ export WEECHAT_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/weechat"
 export PYTHONHISTFILE="${XDG_CACHE_HOME}/python_history"
 export ATOM_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/atom"
 export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME}/npm/npmrc"
+export PARALLEL_HOME="$XDG_CONFIG_HOME"/parallel
 
 
 #export FZF_DEFAULT_COMMAND="find -L"
