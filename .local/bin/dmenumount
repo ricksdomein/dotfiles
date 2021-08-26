@@ -2,16 +2,15 @@
 
 ignore=("/dev/sda1" "/dev/sda2" "/dev/sdb1" "/dev/sdc1")
 
-
 mountusb() {
-    device="$(printf "%s" "$mount_devices" | awk '{$NF=""; print $0}' | dmenu -p "Mount:")"
+    device="$(printf "%s" "$mount_devices" | awk '{$NF=""; print $0}' | dmenu "$@" -p "Mount:")"
     [[ -z $device ]] && exit
     device="$(printf "%s" "$mount_devices" | grep "$device")"
     if udisksctl mount -b "$(echo -e "$device" | awk 'NF>1{print $NF}')"; then notify-send -a "dmenumount" "USB mounting" "$device"; fi
 }
 
 unmountusb() {
-    device="$(printf "%s" "$unmount_devices" | awk '{$NF=""; print $0}' | dmenu -p "Unmount:")"
+    device="$(printf "%s" "$unmount_devices" | awk '{$NF=""; print $0}' | dmenu "$@" -p "Unmount:")"
     [[ -z $device ]] && exit
     device="$(printf "%s" "$unmount_devices" | grep "$device")"
     if udisksctl unmount -b "$(echo -e "$device" | awk 'NF>1{print $NF}')"; then notify-send -a "dmenumount" "USB unmounting" "$device"; fi
@@ -38,6 +37,6 @@ if [ -z "$unmount_devices" ]; then
 elif [ -z "$mount_devices" ]; then
     unmountusb
 else
-    action="$(printf "Mount\nUnmount" | dmenu -p "Action:")"
+    action="$(printf "Mount\nUnmount" | dmenu "$@" -p "Action:")"
     [ "$action" == "Mount" ] && mountusb || unmountusb
 fi

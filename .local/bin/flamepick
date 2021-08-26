@@ -4,8 +4,10 @@
 # choose the kind of screenshot to take, including copying the image or even
 # highlighting an area to copy. scrotcucks on suicidewatch right now.
 
-case "$(printf "Select area\\nFull screen\\nFull screen (clipboard)" | dmenu -i -p "Screenshot:")" in
-	"Select area") flameshot gui ;;
+
+case "$(printf "Select area\\nFull screen\\nFull screen delayed\\nFull screen (clipboard)" | dmenu -i "$@" -p "Screenshot:")" in
+	"Select area") sleep 0.5s && flameshot gui ;;
 	"Full screen") sleep 0.5s && flameshot full -p "${XDG_PICTURES_DIR}" ;;
-	"Full screen (clipboard)") flameshot full -c ;;
+	"Full screen delayed") sleep 5s && flameshot full -p "${XDG_PICTURES_DIR}" ;;
+	"Full screen (clipboard)") sleep 0.5s && flameshot full -c ;;
 esac
