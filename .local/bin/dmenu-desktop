@@ -65,5 +65,4 @@ echo "$DESKTOP" | awk -v histfile="$historyfile" '
 	}
 '
 
-
 ${SHELL:-"/bin/sh"} -c "$(grep -oP -m 1 -h '(?<=^Exec=).*' "$DESKTOP"| sed 's/%.//' | sed 's/^"//g' | sed 's/" *$//g')"
