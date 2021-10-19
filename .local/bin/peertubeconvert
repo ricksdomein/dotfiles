@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# torrent or play peertube videos, requires the transadd script and mpv
+# first arugment is action, second argument is the video link, third is the quality (480 or 1080)
+
+URL="$(curl -s "$2" | grep -o '<meta[[:space:]][[:space:]]*property="*og:video:secure_url"*[[:space:]][[:space:]]*content="*\([^"]*\)"*\>' | sed -e 's!<meta[[:space:]][[:space:]]*property="*og:video:secure_url"*[[:space:]][[:space:]]*content="!!g')"
+
+case "$1" in
+	mpv)
+		mpv "$(echo "$URL" | sed "s/videos\/embed/download\/videos/")""-$3.mp4"
+    		;;
+	tor)
+		transadd "$(echo "$URL" | sed "s/videos\/embed/download\/torrents/")""-$3.torrent"
+    		;;
+esac
