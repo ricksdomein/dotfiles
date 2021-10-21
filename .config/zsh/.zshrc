@@ -10,6 +10,7 @@ PROMPT=$'%F{%(#.blue.green)}┌──[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(#.
 setopt autocd		# Automatically cd into typed directory.
 stty stop undef		# Disable ctrl-s to freeze terminal.
 setopt interactive_comments
+setopt HIST_IGNORE_SPACE
 
 # History in cache directory:
 HISTSIZE=10000000
@@ -81,11 +82,13 @@ bindkey -s '^a' 'bc -lq\n'
 
 bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'
 
-rhist () {
-	print -z "$( cat $HISTFILE | tac | awk $'!x[$0]++' | dmenu -i -p "Search: ")"
-}
-
-bindkey -s '^R' 'rhist\n'
+#rhist () {
+#	print -z "$( cat $HISTFILE | tac | awk $'!x[$0]++' | dmenu -i -p "Search: ")"
+#}
+#
+#bindkey -s '^R' 'rhist\n'
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
 
 bindkey '^[[P' delete-char
 
