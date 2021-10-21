@@ -6,4 +6,5 @@
 # * TR_TORRENT_ID
 # * TR_TORRENT_NAME
 #export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u $USER)/bus; export DISPLAY=:0;
-notify-send "Transmission-daemon" "$TR_TORRENT_NAME has completely downloaded."
+#XDG_RUNTIME_DIR=/run/user/$(id -u) notify-send "Transmission-daemon" "$TR_TORRENT_NAME has completely downloaded."
+notify-send -a "Transmission-daemon" "$TR_TORRENT_NAME has completely downloaded."

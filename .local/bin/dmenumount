@@ -16,7 +16,7 @@ mountusb() { \
 	chosen="$(echo "$usbdrives" | dmenu -i -p "Mount which drive?")" || exit 1
 	name="$(echo $chosen | grep -oE '[^/]+$')"
 	chosen="$(echo "$chosen" | awk '{print $1}')"
-	sudo -A mount "$chosen" 2>/dev/null && notify-send "💻 USB mounting" "$chosen mounted." && exit 0
+	sudo -A mount "$chosen" 2>/dev/null && notify-send -a "dmenumount" "💻 USB mounting" "$chosen mounted." && exit 0
 	getmount "$HOME/Mounts/$name"
 	partitiontype="$(lsblk -no "fstype" "$chosen")"
 	case "$partitiontype" in
@@ -24,7 +24,7 @@ mountusb() { \
 		"exfat") sudo -A mount "$chosen" "$mp" -o uid="$(id -u)",gid="$(id -g)";;
 		*) sudo -A mount "$chosen" "$mp"; user="$(whoami)"; ug="$(groups | awk '{print $1}')"; sudo -A chown "$user":"$ug" "$mp";;
 	esac
-	notify-send "💻 USB mounting" "$chosen mounted to $mp."
+	notify-send -a "dmenumount" "💻 USB mounting" "$chosen mounted to $mp."
 	}
 
 mountandroid() { \
@@ -36,7 +36,7 @@ mountandroid() { \
         simple-mtpfs --device "$chosen" "$mp"
 	echo "OK" | dmenu -i -p "Tap Allow on your phone if it asks for permission and then press enter" || exit 1
 	simple-mtpfs --device "$chosen" "$mp"
-	notify-send "🤖 Android Mounting" "Android device mounted to $mp."
+	notify-send -a "dmenumount" "🤖 Android Mounting" "Android device mounted to $mp."
 	}
 
 asktype() { \

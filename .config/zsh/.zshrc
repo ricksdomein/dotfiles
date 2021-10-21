@@ -89,6 +89,7 @@ bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'
 #bindkey -s '^R' 'rhist\n'
 source /usr/share/fzf/key-bindings.zsh
 source /usr/share/fzf/completion.zsh
+#bindkey '^R' history-incremental-pattern-search-backward
 
 bindkey '^[[P' delete-char
 

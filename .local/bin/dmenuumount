@@ -9,14 +9,14 @@ unmountusb() {
 	chosen="$(echo "$drives" | dmenu -i -p "Unmount which drive?")" || exit 1
 	chosen="$(echo "$chosen")"
 	[ -z "$chosen" ] && exit
-	sudo -A umount "$chosen" && notify-send "💻 USB unmounting" "$chosen unmounted."
+	sudo -A umount "$chosen" && notify-send -a "dmennuumount" "💻 USB unmounting" "$chosen unmounted."
 	rmdir "$chosen"
 	}
 
 unmountandroid() { \
 	chosen="$(awk '/simple-mtpfs/ {print $2}' /etc/mtab | sed 's/\\040/ /g' | dmenu -i -p "Unmount which device?")" || exit 1
 	[ -z "$chosen" ] && exit
-	fusermount -u "$chosen" && notify-send "🤖 Android unmounting" "$chosen unmounted."
+	fusermount -u "$chosen" && notify-send -a "dmenuumount" "🤖 Android unmounting" "$chosen unmounted."
 	rmdir "$chosen"
 	}
 
